@@ -7,14 +7,18 @@ using System.IO;
 public class MotivePlugin : ModuleRules
 {
 
-    private string ModulePath
+	private string ModulePath
+	{
+		get { return  ModuleDirectory; }
+	}
+    /* private string ModulePath
     {
-        get { return Path.GetDirectoryName(RulesCompiler.GetModuleFilename(this.GetType().Name)); }
-    }
+        get { return Path.GetDirectoryName(ModuleDirectory(this.GetType().Name)); }
+    } */
 
     private string ThirdPartyPath
     {
-        get { return Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/")); }
+        get { return Path.GetFullPath(Path.Combine(ModulePath, "../ThirdParty/")); }
     }
 
     public MotivePlugin(TargetInfo Target)
@@ -45,7 +49,9 @@ public class MotivePlugin : ModuleRules
 				"CoreUObject",
                 "Engine",
                 "RHI",
-                "RenderCore"
+                "RenderCore",
+				"Projects",
+				"NatNet"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

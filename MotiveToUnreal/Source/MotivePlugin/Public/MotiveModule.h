@@ -13,4 +13,9 @@ public:
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+
+protected:
+	/** Convenience function*/
+	bool SearchForDllPath(const FString _searchBase, const FString _dllName);
+
 };

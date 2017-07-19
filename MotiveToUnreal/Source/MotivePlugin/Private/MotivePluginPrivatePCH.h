@@ -7,5 +7,8 @@
 
 #include "CoreUObject.h"
 #include "Engine.h"
+#include "Core.h"
+#include "ModuleManager.h"
+#include "IPluginManager.h"
 
 #include "MotiveBPFunctionLibrary.h"

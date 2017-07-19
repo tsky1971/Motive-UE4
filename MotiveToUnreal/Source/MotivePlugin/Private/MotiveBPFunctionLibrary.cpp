@@ -87,8 +87,9 @@ TArray<FMoCapDataStruct> UMotiveBPFunctionLibrary::ReceiveMotive()
 					// MarkerSet
 					sMarkerSetDescription* pMS = pDataDefs->arrDataDescriptions[i].Data.MarkerSetDescription;
 					UE_LOG(MotiveLog, Warning, TEXT("MarkerSet Name : %s\n"), *FString(ANSI_TO_TCHAR(pMS->szName)));
-					for (int i = 0; i < pMS->nMarkers; i++)
-							UE_LOG(MotiveLog, Warning, TEXT("%s\n"), *FString(ANSI_TO_TCHAR(pMS->szMarkerNames[i])));
+					for (int idxMarker = 0; idxMarker < pMS->nMarkers; idxMarker++) {
+						UE_LOG(MotiveLog, Warning, TEXT("%s\n"), *FString(ANSI_TO_TCHAR(pMS->szMarkerNames[idxMarker])));
+					}
 				}
 				else if (pDataDefs->arrDataDescriptions[i].type == Descriptor_RigidBody)
 				{ 
@@ -131,7 +132,7 @@ TArray<FMoCapDataStruct> UMotiveBPFunctionLibrary::ReceiveMotive()
 }
 
 // Establish a NatNet Client connection
-int CreateClient(int iConnectionType)
+int CreateClient(int _iConnectionType)
 {
 	// release previous server
 	if (theClient)
@@ -141,7 +142,7 @@ int CreateClient(int iConnectionType)
 	}
 	
 	// create NatNet client
-	theClient = new NatNetClient(iConnectionType);
+	theClient = new NatNetClient(_iConnectionType);
 
 	// [optional] use old multicast group
 	//theClient->SetMulticastAddress("224.0.0.1");
@@ -231,6 +232,9 @@ void __cdecl DataHandler(sFrameOfMocapData* data, void* pUserData)
 
 FMoCapDataStruct UMotiveBPFunctionLibrary::getRigidbodyData(TArray<FMoCapDataStruct> MoCapDataArray, int32 ID){
 	FMoCapDataStruct fmocapDataStruct;
+
+	memset(&fmocapDataStruct, 0, sizeof(FMoCapDataStruct));
+
 	for (int32 i = 0; i < MoCapDataArray.Num(); i++) {
 		if (MoCapDataArray[i].ID == ID) {
 			//UE_LOG(MotiveLog, Warning, TEXT("ID FOUND: %d"), MoCapDataArray[i].ID);
